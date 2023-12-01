@@ -46,7 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCartDisplay();
             showError('');
         }
-    } function addToCart(productId, productPrice) {
+    } 
+    function addToCart(productId, productPrice) {
         if (budget >= productPrice) {
             const existingProduct = cart.find(item => item.id === productId);
 
@@ -66,6 +67,17 @@ document.addEventListener('DOMContentLoaded', () => {
             showError('No tienes suficiente presupuesto para este producto.');
         }
     }
+    const addCart = document.getElementById('addCarrito');
+    addCart.addEventListener('click', () => {
+        addToCart(1, 10);
+        console.log(cart)
+    });
+
+    const removeCart = document.getElementById('eliminarCarrito');
+    removeCart.addEventListener('click', () => {
+        removeFromCart(1);
+        console.log(cart)
+    });
 });
 
 function getProductPrice(productId) {
@@ -78,15 +90,3 @@ function updateCartDisplay() {
     console.log('Carrito actualizado:', cart);
     console.log('Presupuesto restante:', budget);
 }
-
-const addCart = document.getElementById('addCarrito');
-addCart.addEventListener('click', () => {
-    addToCart(1, 10);
-    console.log(cart)
-});
-
-const removeCart = document.getElementById('eliminarCarrito');
-removeCart.addEventListener('click', () => {
-    removeFromCart(1);
-    console.log(cart)
-});
