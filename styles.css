@@ -117,8 +117,11 @@
     background: var(--c, #0009);
     clip-path: inset(0 var(--_i, 100%) 0 0);
     -webkit-mask: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    mask: none;
+    mask-composite: xor;
     -webkit-mask-composite: xor;
     -webkit-mask-clip: text, padding-box;
+    mask-clip: text, padding-box;
 }
 
 .productCard:hover figcaption {
@@ -132,6 +135,7 @@
 @supports not (-webkit-mask-clip: text) {
     .productCard figcaption {
         -webkit-mask: none;
+        mask: none;
         color: #fff;
     }
 }
