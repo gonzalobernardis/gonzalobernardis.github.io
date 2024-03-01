@@ -3,32 +3,72 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de compras - Inicio</title>
+    <title>Carrito de Compras Vue</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="styles.css">
-    <script src="https://kit.fontawesome.com/9270fac2b2.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="generalContainer">
-    <header class="headerContainer">
-        <h1> <i class="fa-solid fa-cart-shopping"></i> Lista de compras</h1>
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="carrito.html">Carrito</a></li>
-        </ul>
+<body>
+    <header>
+        <h1><i class="fa-brands fa-shopify"></i> Tienda Online</h1>
     </header>
-    <main>
-        <aside class="asideContainer">
-            <div class="presupuesto">
-                <i class="fa-solid fa-hand-holding-dollar"></i> Presupuesto: <span id="montoPresupuesto"></span>
+    <main id="app">
+
+        <div class="cardContainer">
+            <h2> Productos </h2>
+            <div class="botonesFiltros">
+                <button @click="filtrarProductos('Zapatillas')">Zapatillas</button>
+                <button @click="filtrarProductos('Remeras')">Remeras</button>
+                <button @click="filtrarProductos('Pantalones')">Pantalones</button>
+                <button @click="filtrarProductos('Conjunto')">Conjunto</button>
+                <button @click="filtrarProductos('Buzo')">Buzo</button>
+                <button @click="mostrarTodosProductos">Mostrar Todos</button>
             </div>
-            <button id="btnReset" class="resetCarrito">Reiniciar Carrito</button>
-        </aside>
-        <ul id="productList" class="product-list">
-            
-        </ul>
+            <div class="row" id="listaProductos">
+                <div v-for="producto in productosFiltrados" class="card">
+                    <h4>{{ producto.nombre }}</h4>
+                    <h5>{{ producto.uso }}</h5>
+                    <img :src="producto.imagen" alt="imagen de Producto">
+                    <h3>${{ producto.precio }}</h3>
+                    <button @click="agregarProductoAlCarrito(producto.id)" type="button" class="mt-1"><i
+                            class="fa-solid fa-cart-plus"></i> Agregar al Carrito</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card containerCarrito">
+            <h2><i class="fa-solid fa-cart-shopping btn-detalle"></i> Carrito</h2>
+            <p v-if="noExistenProductos()">No hay productos agregados al carrito</p>
+            <div v-else>
+                <h2>Items del carrito</h2>
+                <div class="containerTitulos">
+                    <span>Imagen</span>
+                    <span>Nombre</span>
+                    <span>Precio</span>
+                </div>
+                <ul>
+                    <li v-for="(item, index) in carrito" class="itemCarrito">
+                        <img :src="item.imagen" alt="imagen de producto">
+                        <h3>{{ item.nombre }}</h3>
+                        <h4>${{ item.precio }}</h4>
+                        <button @click="eliminarDelCarrito(index)" class="btn-delete">Eliminar del Carrito</button>
+                    </li>
+                </ul>
+                <h3>Precio total del carrito: ${{ carritoTotal }}</h3>
+                <button class="mt-1">Finalizar compra</button>
+            </div>
+        </div>
     </main>
+    <footer>
+        <p> EMAE | Aplicaciones Web Progresivas</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
     <script src="app.js"></script>
+    <script src="sw.js"></script>
 </body>
 
 </html>

@@ -1,92 +1,140 @@
-// JavaScript code for managing the budget and adding products to the cart
-class ShoppingCart {
-    constructor() {
-        this.presupuesto = 0;
-        this.cart = [];
-    }
-
-    setPresupuesto(amount) {
-        this.presupuesto = amount;
-        document.getElementById("montoPresupuesto").textContent = amount;
-    }
-}
-
-const shoppingCart = new ShoppingCart();
-shoppingCart.setPresupuesto(100);
-
-fetch('https://fakestoreapi.com/products')
-    .then(res => res.json())
-    .then(json => {
-        const listaProductos = document.getElementById('productList');
-        json.forEach(product => {
-            listaProductos.innerHTML += `
-                <figure class="productCard">
-                <img class="imagenProducto" src="${product.image}" alt="${product.title}">
-                <figcaption>
-                <h3>${product.title}</h3>
-                <span class="productPrice">${product.price}</span>
-                <button id="addCarrito" class="añadirAlCarrito">Añadir al carrito</button>
-                <button id="eliminarCarrito" class="eliminarDelCarrito">Eliminar del carrito</button>
-                </figcaption>
-                </figure>
-            `
-        });
-    })
-    .catch(error => document.write('No fue posible obtener los productos', error));
-
-document.addEventListener('DOMContentLoaded', () => {
-    const btnReset = document.getElementById('btnReset');
-    btnReset.addEventListener('click', resetCart);
-    function removeFromCart(productId) {
-        const index = cart.findIndex(item => item.id === productId);
-
-        if (index !== -1) {
-            const removedProduct = cart.splice(index, 1)[0];
-            budget += removedProduct.quantity * getProductPrice(productId);
-            updateCartDisplay();
-            showError('');
-        }
-    } 
-    function addToCart(productId, productPrice) {
-        if (budget >= productPrice) {
-            const existingProduct = cart.find(item => item.id === productId);
-
-            if (existingProduct) {
-                existingProduct.quantity += 1;
-            } else {
-                cart.push({
-                    id: productId,
-                    quantity: 1,
-                });
+var app = new Vue({
+    el: '#app',
+    data: {
+        productos: [
+            {
+                id: 1,
+                nombre: "Zapatillas Sarkany",
+                uso: "Zapatillas",
+                precio: 15000,
+                imagen: "images/zapatilla-sarkany.jpeg"
+            },
+            {
+                id: 2,
+                nombre: "Zapatillas Adidas",
+                uso: "Zapatillas",
+                precio: 12000,
+                imagen: "images/zapatilla-adidas.jpeg"
+            },
+            {
+                id: 3,
+                nombre: "Zapatillas Diadora",
+                uso: "Zapatillas",
+                precio: 25000,
+                imagen: "images/zapatilla-diadora.jpeg"
+            },
+            {
+                id: 4,
+                nombre: "Remera Topper",
+                uso: "Remeras",
+                precio: 27500,
+                imagen: "images/remera-topper.jpeg"
+            },
+            {
+                id: 5,
+                nombre: "Remera Puma",
+                uso: "Remeras",
+                precio: 18000,
+                imagen: "images/remera-puma.jpeg"
+            },
+            {
+                id: 6,
+                nombre: "Pantalones Nike",
+                uso: "Pantalones",
+                precio: 13000,
+                imagen: "images/pantalones-nike.jpeg"
+            },
+            {
+                id: 7,
+                nombre: "Conjunto Topper",
+                uso: "Conjunto",
+                precio: 58000,
+                imagen: "images/conjunto-topper.jpeg"
+            },
+            {
+                id: 8,
+                nombre: "Conjunto Puma",
+                uso: "Conjunto",
+                precio: 64000,
+                imagen: "images/conjunto-puma.jpeg"
+            },
+            {
+                id: 9,
+                nombre: "Buzo Topper",
+                uso: "Buzo",
+                precio: 40000,
+                imagen: "images/buzo-topper.jpeg"
+            },
+            {
+                id: 10,
+                nombre: "Buzo Puma",
+                uso: "Buzo",
+                precio: 8000,
+                imagen: "images/buzo-puma.jpeg"
             }
-
-            budget -= productPrice;
-            updateCartDisplay();
-            showError('');
-        } else {
-            showError('No tienes suficiente presupuesto para este producto.');
+        ],
+        carrito: [],
+        filtroCategoria: ''
+    },
+    methods: {
+        noExistenProductos() {
+            return this.carrito.length == 0;
+        },
+        agregarProductoAlCarrito(productId) {
+            const producto = this.productos.find(item => item.id === productId);
+            if (producto) {
+                this.carrito.push(producto)
+            }
+        },
+        eliminarDelCarrito(index) {
+            this.carrito.splice(index, 1);
+        },
+        filtrarProductos(categoria) {
+            this.filtroCategoria = categoria;
+        },
+        mostrarTodosProductos() {
+            this.filtroCategoria = '';
+        }
+    },
+    computed: {
+        carritoTotal: function () {
+            let total = 0;
+            this.carrito.forEach(productoComprado => {
+                total += productoComprado.precio
+            });
+            return total;
+        },
+        productosFiltrados() {
+            if (!this.filtroCategoria) {
+                return this.productos;
+            }
+            return this.productos.filter(producto => producto.uso === this.filtroCategoria);
         }
     }
-    const addCart = document.getElementById('addCarrito');
-    addCart.addEventListener('click', () => {
-        addToCart(1, 10);
-        console.log(cart)
-    });
+})
 
-    const removeCart = document.getElementById('eliminarCarrito');
-    removeCart.addEventListener('click', () => {
-        removeFromCart(1);
-        console.log(cart)
-    });
+const registerServiceWorker = async () => {
+    if ("serviceWorker" in navigator) {
+        try {
+            const registration = await navigator.serviceWorker.register("sw.js");
+            if (registration.installing) {
+                console.log("Service worker installing");
+            } else if (registration.waiting) {
+                console.log("Service worker installed");
+            } else if (registration.active) {
+                console.log("Service worker active");
+            }
+        } catch (error) {
+            console.error(`Registration failed with ${error}`);
+        }
+    }
+};
+
+registerServiceWorker();
+
+
+navigator.serviceWorker.getRegistrations().then(function (registrations) {
+    for (let registration of registrations) {
+        registration.unregister();
+    }
 });
-
-function getProductPrice(productId) {
-    const product = products.find(p => p.id === productId);
-    return product ? product.price : 0;
-}
-
-
-function updateCartDisplay() {
-    console.log('Carrito actualizado:', cart);
-    console.log('Presupuesto restante:', budget);
-}

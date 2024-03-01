@@ -1,161 +1,150 @@
-* {
-    padding: 0;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&display=swap');
+
+*{
     margin: 0;
-    box-sizing: border-box;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
 }
 
-.generalContainer {
-    max-width: 70vw;
-    margin-left: 15%;
+h1, h2 {
+    margin: 1rem 0;
 }
-
-.headerContainer {
+header {
+    height: 15vh;
+    background-color: rgb(221, 47, 61);
+    color: white;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    padding: 20px;
-    background-color: #333;
-    color: #ffffff;
+    position: sticky;
+    top: -1rem;
 }
 
-.headerContainer ul {
-    display: flex;
-    justify-content: space-between;
-    width: 20vw;
-    list-style: none;
+main {
+    min-height: 80vh;
+    width: 70%;
+    margin: 0 auto;
 }
 
-.headerContainer a {
-    text-decoration: none;
-    color: #ffffff;
-}
-
-.asideContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 20vw;
-    height: 18vh;
-    padding: 20px;
-    background-color: #dfdfdf;
-    float: right;
-    position: fixed;
-    top: 0;
-    right: 80vw;
-}
-
-.resetCarrito {
-    background-color: #ff0000;
-    border-radius: 10%;
-    width: 8vw;
-    height: 5vh;
-    color: #ffffff;
-    border: none;
-}
-
-.añadirAlCarrito {
-    background-color: #00ff00;
-    border-radius: 10%;
-    width: 8vw;
-    height: 5vh;
-    color: #000000;
-    border: none;
-}
-
-.eliminarDelCarrito {
-    background-color: #ff0000;
-    border-radius: 10%;
-    width: 8vw;
-    height: 5vh;
-    color: #ffffff;
-    border: none;
-}
-
-.resetCarrito:hover {
-    cursor: pointer;
-    animation: myAnim 1s ease 0s 1 normal forwards;
-    box-shadow: 5px 5px 10px 1px #000000;
-}
-
-.presupuesto {
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.product-list {
-    list-style-type: none;
+.row {
     display: flex;
     flex-wrap: wrap;
+    gap: 3rem;
     width: 70vw;
 }
 
-.productCard {
+footer {
+    height: 5vh;
     display: flex;
-    flex-direction: column;
-    border-radius: 1rem;
-    overflow: hidden;
     align-items: center;
+    justify-content: end;
+    background-color: rgb(32, 31, 31);
+    color: aliceblue;
+    padding-right: 2rem;
+}
+
+.cardContainer {
+    border-color: rgb(56, 56, 56);
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 5px;
+    margin: 1rem 0 1rem 0;
+    padding: 2rem;
+    width: 65vw;
+}
+
+.cardContainer h2 {
+    text-align: center;
+}
+
+.card {
+    border-color: rgb(56, 56, 56);
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 25vw;
+    text-align: center;
+}
+
+.card img {
+    width: 50%;
+}
+ul {
+    margin: 2rem;
+}
+input {
+    border-color: rgb(116, 116, 116);
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+button {
+    background-color: #232323;
+    padding: 5px;
+    color: aliceblue;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #4c4b4b;
+}
+
+.mt-1{
+    margin-top: 1rem;
+}
+
+.mt-1:hover {
+    background-color: rgb(36, 149, 83);
+}
+
+.btn-delete {
+    background-color: rgb(90, 10, 10);
     cursor: pointer;
 }
 
-.productCard > * {
-    grid-area: 1/1;
-    transition: .6s;
+.btn-delete:hover {
+    background-color: rgb(240, 28, 28);
 }
 
-.productCard figcaption {
-    display: grid;
+.btn-detalle{
+    color: rgb(46, 66, 180);
+    cursor: pointer;
+}
+
+.btn-update {
+    color: rgb(36, 149, 83);
+    cursor: pointer;
+}
+
+.itemCarrito {
+    display: flex;
+    justify-content: space-around;
     align-items: center;
-    gap: 1.5rem;
-    font-family: sans-serif;
-    font-size: 1.3rem;
-    width: 35vw;
-    font-weight: bold;
-    color: #0000;
-    padding: 2rem;
-    background: var(--c, #0009);
-    clip-path: inset(0 var(--_i, 100%) 0 0);
-    -webkit-mask: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
-    mask: none;
-    mask-composite: xor;
-    -webkit-mask-composite: xor;
-    -webkit-mask-clip: text, padding-box;
-    mask-clip: text, padding-box;
+    width: 61vw;
+    border: 2px solid rgb(36, 149, 83);
+    margin-top: 2em;
 }
 
-.productCard:hover figcaption {
-    --_i: 0%;
+.containerCarrito {
+    width: 65vw;
 }
 
-.productCard:hover img {
-    animation: myAnim 1s ease 0s 1 normal forwards;
+.containerCarrito img {
+    width: 15%;
 }
 
-@supports not (-webkit-mask-clip: text) {
-    .productCard figcaption {
-        -webkit-mask: none;
-        mask: none;
-        color: #fff;
-    }
+.containerTitulos {
+    display: flex;
+    justify-content: space-evenly;
+    width: 53.5vw;
 }
 
-.imagenProducto {
-    width: 15vw;
-    height: 15vh;
-}
-
-.productPrice {
-    display: block;
-    font-size: 2em;
-    font-weight: bold;
-}
-@keyframes myAnim {
-    0% {
-        transform: scale(0.9);
-    }
-
-    100% {
-        transform: scale(1);
-    }
+.botonesFiltros {
+    display: flex;
+    gap: 4em;
 }
